@@ -18,7 +18,7 @@
 
 namespace Blyss.PurposeDome
 {
-    using System;
+    using Serilog;
 
     /// <summary>
     ///     Main program.
@@ -27,7 +27,11 @@ namespace Blyss.PurposeDome
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            Log.Information("Hello, World!");
         }
     }
 }
