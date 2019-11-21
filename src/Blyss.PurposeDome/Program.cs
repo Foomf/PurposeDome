@@ -25,7 +25,7 @@ namespace Blyss.PurposeDome
     /// </summary>
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
