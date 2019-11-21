@@ -18,7 +18,45 @@
 
 namespace Blyss.PurposeDome.Space
 {
+    using System;
+
     public class Map
     {
+        private readonly int _width;
+        private readonly int _height;
+        private readonly Cell[][] _cells;
+
+        public Map(int width, int height)
+        {
+            _width = width;
+            _height = height;
+
+            _cells = new Cell[width][];
+            for (var x = 0; x < width; ++x)
+            {
+                _cells[width] = new Cell[height];
+
+                for (var y = 0; y < height; ++y)
+                {
+                    _cells[x][y] = new Cell();
+                }
+            }
+        }
+
+        public Cell CellAt(int x, int y)
+        {
+            if (x < 0 || x >= _width)
+            {
+                throw new ArgumentOutOfRangeException(nameof(x));
+            }
+
+            if (y < 0 || y >= _height)
+            {
+                throw new ArgumentOutOfRangeException(nameof(y));
+            }
+
+            return _cells[x][y];
+        }
+
     }
 }
