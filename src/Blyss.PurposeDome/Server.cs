@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using Serilog;
 
 namespace Blyss.PurposeDome
@@ -33,7 +34,15 @@ namespace Blyss.PurposeDome
         private ushort port = 3786;
         private IPAddress localAddr = IPAddress.Parse("127.0.0.1");
         private bool stopped = false;
-        private List<TcpClient> clients = new List<TcpClient>();
+        private List<Client> clients = new List<Client>();
+        private ClientConnector _clientConnector;
+        private TcpListener _serverListener;
+
+        public Server()
+        {
+            _serverListener = new TcpListener(localAddr, port);
+            _clientConnector = new ClientConnector(_serverListener);
+        }
 
         public void Stop()
         {
@@ -42,33 +51,38 @@ namespace Blyss.PurposeDome
 
         public async Task RunAsync()
         {
-            var server = new TcpListener(localAddr, port);
-            server.Start();
-            server.BeginAcceptTcpClient(OnConnect, server);
+            _serverListener.Start();
 
             Log.Information("Server started. Press Ctrl+C to stop.");
             while (!stopped)
             {
-                // do server game loop stuff
+                AddNewClients();
+
                 await Task.Delay(TimeSpan.FromMilliseconds(100));
             }
 
-            server.Stop();
-        }
-
-        void OnConnect(IAsyncResult r)
-        {
-            if (!(r.AsyncState is TcpListener server))
+            foreach (var client in clients)
             {
-                return;
+                client.Close();
             }
 
-            var client = server.EndAcceptTcpClient(r);
-            client.NoDelay = true;
-            clients.Add(client);
-            Log.Information("Client connected!");
+            _serverListener.Stop();
+        }
 
-            server.BeginAcceptTcpClient(OnConnect, server);
+        public void RemoveClient(Client c)
+        {
+            if (!clients.Remove(c))
+            {
+                Log.Warning("Tried to remove nonexistent client from the server!");
+            }
+        }
+
+        private void AddNewClients()
+        {
+            while (_clientConnector.TryGetClient(out var tcpClient))
+            {
+                clients.Add(new Client(tcpClient, this));
+            }
         }
     }
 }
