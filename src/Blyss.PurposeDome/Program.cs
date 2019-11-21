@@ -16,22 +16,32 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
+using System;
+using System.Threading.Tasks;
+using Serilog;
+
 namespace Blyss.PurposeDome
 {
-    using Serilog;
-
     /// <summary>
     ///     Main program.
     /// </summary>
     internal class Program
     {
-        private static void Main()
+        private static async Task Main()
         {
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
                 .CreateLogger();
 
-            Log.Information("Hello, World!");
+            var server = new Server();
+
+            Console.CancelKeyPress += (sender, args) =>
+            {
+                server.Stop();
+                args.Cancel = true;
+            };
+
+            await server.RunAsync();
         }
     }
 }
