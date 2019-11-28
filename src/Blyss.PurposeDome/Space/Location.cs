@@ -17,19 +17,22 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 using System;
-using System.Collections.Generic;
 
 namespace Blyss.PurposeDome.Space
 {
-    public class World
+    public class Location
     {
-        private Dictionary<Guid, Map> _maps = new Dictionary<Guid, Map>();
+        public Guid MapId { get; }
 
-        private Location _spawnLocation;
+        public int X { get; }
 
-        public World(Location spawnLocation)
+        public int Y { get; }
+
+        public Location(Guid mapId, int x, int y)
         {
-            _spawnLocation = spawnLocation;
+            MapId = mapId;
+            X = x;
+            Y = y;
         }
     }
 }
