@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Blyss.PurposeDome.Plugins;
 using Serilog;
 
 namespace Blyss.PurposeDome
@@ -51,6 +52,9 @@ namespace Blyss.PurposeDome
 
         public async Task RunAsync()
         {
+            var loader = new PluginLoader("Plugins");
+            loader.Load();
+
             _serverListener.Start();
 
             Log.Information("Server started. Press Ctrl+C to stop.");
