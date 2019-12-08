@@ -16,30 +16,9 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Nett;
-using Serilog;
-
 namespace Blyss.PurposeDome.Plugins
 {
-    public class PluginLoader
+    public class Plugin
     {
-        private static readonly ILogger Log = Serilog.Log.ForContext<PluginLoader>();
-
-        public PluginLoader(string pluginDir)
-        {
-            PluginDir = pluginDir;
-
-            if (!Directory.Exists(pluginDir))
-            {
-                Log.Information("Creating directory {dir}", pluginDir);
-                Directory.CreateDirectory(pluginDir);
-            }
-        }
-
-        public string PluginDir { get; }
     }
 }
