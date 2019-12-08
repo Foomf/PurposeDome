@@ -68,24 +68,9 @@ namespace Blyss.PurposeDome.Plugins
                 return null;
             }
 
-            PluginTomlConfig pluginToml;
             try
             {
-                pluginToml = Toml.ReadFile<PluginTomlConfig>(pluginFilePath);
-            }
-            catch (Exception e)
-            {
-                Log.Error(
-                    "Directory {dir} looks like a plugin dir, but failed to read/parse {file}: " +
-                    "{message}",
-                    dir,
-                    pluginFilePath,
-                    e.Message);
-                return null;
-            }
-
-            try
-            {
+                var pluginToml = Toml.ReadFile<PluginTomlConfig>(pluginFilePath);
                 return new PluginConfig(pluginToml);
             }
             catch (IncompleteTomlConfigException e)
@@ -96,6 +81,16 @@ namespace Blyss.PurposeDome.Plugins
                     pluginFilePath,
                     e.Property,
                     e.Details);
+                return null;
+            }
+            catch (Exception e)
+            {
+                Log.Error(
+                    "Directory {dir} looks like a plugin dir, but failed to read/parse {file}: " +
+                    "{message}",
+                    dir,
+                    pluginFilePath,
+                    e.Message);
                 return null;
             }
         }
