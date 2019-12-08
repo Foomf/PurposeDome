@@ -42,7 +42,7 @@ namespace Blyss.PurposeDome.Plugins
             if (property == null)
             {
                 throw new IncompleteTomlConfigException(
-                    nameof(name), $"{name} is required!");
+                    name, $"{name} is required!");
             }
 
             return property;
@@ -54,7 +54,7 @@ namespace Blyss.PurposeDome.Plugins
             if (!property.HasValue)
             {
                 throw new IncompleteTomlConfigException(
-                    nameof(name), $"{name} is required!");
+                    name, $"{name} is required!");
             }
 
             return property.Value;
