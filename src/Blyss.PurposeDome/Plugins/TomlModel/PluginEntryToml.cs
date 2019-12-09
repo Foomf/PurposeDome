@@ -16,7 +16,7 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-namespace Blyss.PurposeDome.Plugins
+namespace Blyss.PurposeDome.Plugins.TomlModel
 {
     public class PluginEntryToml
     {

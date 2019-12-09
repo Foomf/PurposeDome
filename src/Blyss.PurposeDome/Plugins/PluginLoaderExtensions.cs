@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Blyss.PurposeDome.Plugins.TomlModel;
 using Nett;
 using Serilog;
 

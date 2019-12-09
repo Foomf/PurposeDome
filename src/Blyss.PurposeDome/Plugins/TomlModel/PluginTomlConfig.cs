@@ -19,7 +19,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Blyss.PurposeDome.Plugins
+namespace Blyss.PurposeDome.Plugins.TomlModel
 {
     public class PluginTomlConfig
     {

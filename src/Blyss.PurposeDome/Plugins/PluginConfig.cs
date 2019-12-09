@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using Blyss.PurposeDome.Plugins.TomlModel;
 
 namespace Blyss.PurposeDome.Plugins
 {
