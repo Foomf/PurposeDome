@@ -29,6 +29,6 @@ namespace Blyss.PurposeDome.Plugins
 
         public List<Guid>? Dependencies { get; set; }
 
-        public string? EntryPoint { get; set; }
+        public PluginEntryToml? EntryPoint { get; set; }
     }
 }

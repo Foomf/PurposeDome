@@ -16,32 +16,12 @@
 //    misrepresented as being the original software.
 // 3. This notice may not be removed or altered from any source distribution.
 
-using System;
-using System.IO;
-using MoonSharp.Interpreter;
-using Serilog;
-
 namespace Blyss.PurposeDome.Plugins
 {
-    public class Plugin
+    public class PluginEntryToml
     {
-        private static readonly ILogger Log = Serilog.Log.ForContext<Plugin>();
+        public string? File { get; set; }
 
-        private readonly Script _script = new Script();
-
-        public Plugin(UnloadedPlugin p)
-        {
-            _script.Options.DebugPrint = Log.Information;
-
-            var entryPoint = Path.Combine(p.Dir, p.Config.EntryFile);
-            if (!File.Exists(entryPoint))
-            {
-                throw new PluginLoadFailException($"File {p.Config.EntryFile} not found!");
-            }
-
-            _script.DoFile(entryPoint);
-            var mainFunc = _script.Globals[p.Config.EntryFunction];
-            _script.Call(mainFunc);
-        }
+        public string? Function { get; set; }
     }
 }
