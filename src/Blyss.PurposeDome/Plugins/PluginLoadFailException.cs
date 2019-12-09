@@ -17,37 +17,14 @@
 // 3. This notice may not be removed or altered from any source distribution.
 
 using System;
-using System.IO;
-using MoonSharp.Interpreter;
-using Serilog;
 
 namespace Blyss.PurposeDome.Plugins
 {
-    public class Plugin
+    public class PluginLoadFailException : Exception
     {
-        private static readonly ILogger Log = Serilog.Log.ForContext<Plugin>();
-
-        private readonly Script _script = new Script();
-
-        public Plugin(UnloadedPlugin p)
+        public PluginLoadFailException(string message)
+            : base(message)
         {
-            _script.Options.DebugPrint = Log.Information;
-
-            var split = p.Config.EntryPoint.Split(":");
-            if (split.Length < 2)
-            {
-                throw new PluginLoadFailException("Malformed entry point!");
-            }
-
-            var entryPoint = Path.Combine(p.Dir, split[0]);
-            if (!File.Exists(entryPoint))
-            {
-                throw new PluginLoadFailException($"File {split[0]} not found!");
-            }
-
-            _script.DoFile(entryPoint);
-            var mainFunc = _script.Globals[split[1]];
-            _script.Call(mainFunc);
         }
     }
 }

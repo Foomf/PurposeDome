@@ -43,7 +43,19 @@ namespace Blyss.PurposeDome.Plugins
             var unloadedPlugins = self.FindPlugins().ToList();
             foreach (var unloadedPlugin in unloadedPlugins)
             {
-                Log.Information("Found plugin {name} with id {id}", unloadedPlugin.Config.Name, unloadedPlugin.Config.Id);
+                self.Load(unloadedPlugin);
+            }
+        }
+
+        internal static void Load(this PluginLoader self, UnloadedPlugin uPlugin)
+        {
+            try
+            {
+                var p = new Plugin(uPlugin);
+            }
+            catch (Exception e)
+            {
+                Log.Error("Failed to load plugin {p}: {message}", uPlugin.Config.Name, e.Message);
             }
         }
 

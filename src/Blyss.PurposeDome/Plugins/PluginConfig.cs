@@ -28,6 +28,7 @@ namespace Blyss.PurposeDome.Plugins
             Name = ReadRequired(toml.Name, nameof(toml.Name));
             Id = ReadRequired(toml.Id, nameof(toml.Id));
             Dependencies = (toml.Dependencies ?? new List<Guid>()).AsReadOnly();
+            EntryPoint = ReadRequired(toml.EntryPoint, nameof(toml.EntryPoint));
         }
 
         public string Name { get; }
@@ -35,6 +36,8 @@ namespace Blyss.PurposeDome.Plugins
         public Guid Id { get; }
 
         public IReadOnlyList<Guid> Dependencies { get; }
+
+        public string EntryPoint { get; }
 
         private static T ReadRequired<T>(T? property, string name)
             where T : class
